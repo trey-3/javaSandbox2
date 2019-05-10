@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Javascript Sandbox</title>
+    <meta charset="UTF-8">
+    <link rel=stylesheet href=cssreset.css TYPE="text/css">
+    <link rel=stylesheet href=style.css TYPE="text/css">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+
+    <h1>The JavaScript Sandbox</h1>
+    <h3>Welcome to the sandbox.</h3>
+    <script>
+        //https://www.theodinproject.com/courses/web-development-101/lessons/fundamentals-part-3 //
+
+        function checkAge(age) {
+            if (age > 18) {
+                return true;
+            } else {
+                return confirm('Do you have your parents permission to access this page?');
+            }
+        }
+
+
+        // http://javascript.info/function-basics //
+
+        function checkAge2(age) {
+            let access = (age > 18) ? true : confirm('Do you have your parents permission to access this page?');
+        }
+
+
+
+
+        function checkAge3(age) {
+            let access = (age > 18) || confirm('Do you have your parents permission to access this page?');
+        }
+
+
+        function min(a, b) {
+            if (a < b) {
+                console.log(a);
+                return a;
+
+
+            } else {
+                console.log(b);
+                return b;
+            }
+
+        }
+
+        // function that multiplies one given value by the power of the next given value.
+        function pow(x, y) {
+            let result = x ** y;
+            console.log(result);
+            return result;
+
+        }
+
+        //let x = prompt("Value to be multiplied:", '');
+        //let y = prompt("To the power of:", '');
+
+        // Call the function with the values inputted in the prompts above
+        //alert( pow(x,y) );
+
+        //Replace Function Expressions with arrow functions in the code:
+
+        function ask(question, yes, no) {
+            if (confirm(question)) yes()
+            else no();
+        }
+
+
+        //ask(
+        //  "Do you agree?",
+        //  () => { alert("You agreed."); },
+        //  () => { alert("You canceled the execution."); }
+        //);
+
+        function hello() {
+            alert("Hello");
+        }
+        hello();
+
+        //hello();
+        function removeFromArray(array, valueRemoved, valueRemoved2) {
+
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] == valueRemoved) {
+                    array.splice(i, 1); //removes current element iterator is located on WITHOUT leaving holes (undefined)
+                }
+                if (array[i] == valueRemoved2) {
+                    array.splice(i, 1);
+                }
+
+            }
+            return array;
+            console.log(array);
+        }
+
+        removeFromArray([1, 2, 3, 4], 2, 3);
+
+        /*
+        * OBJECTS
+        */
+        let user = {
+            name: "John",
+            surname: "Smith",
+        }
+
+        user.name = "Pete";
+
+        delete user.name;
+
+        function isEmpty(obj) {
+            for (let key in obj) {
+                return false;
+            }
+            return true;
+        }
+
+        let object = {};
+
+        //alert(isEmpty(object));
+
+        object.key = "value";
+        console.log(object);
+
+        //alert(isEmpty(object));
+
+        let salaries = {
+            John: 100,
+            Ann: 160,
+            Pete: 130
+        };
+
+        let sum = 0;
+        function parseObject(obj) {
+            for (let key in obj) {
+                sum += obj[key]; //sum of all keys
+            }
+            if (sum == 0) {
+                return false;
+            } else {
+                return sum;
+            }
+
+        }
+
+
+        let menu = {
+            width: 200,
+            height: 300,
+            title: "my menu"
+        };
+
+        function multiplyNumeric(obj) {
+            let product = 0;
+            let newKeyValue = 0;
+            for (let key in obj) {
+                // https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript
+                if (typeof obj[key] == 'string' || obj[key] instanceof String) {
+                    console.log(`"${obj[key]}" is not an integer`);
+                } else {
+                    newKeyValue = (obj[key] * 2);
+                    obj[key] = newKeyValue;
+                    console.log(`${key} is now ${newKeyValue}`);
+                }
+            }
+        }
+
+        multiplyNumeric(menu);
+
+        function multiply(var1, var2) {
+            let product = 0;
+            let int1 = parseInt(var1);
+            let int2 = parseInt(var2);
+            product = int1 * int2;
+            console.log(product);
+        }
+        multiply(2, 4);
+
+        function factorial(a) {
+            let array = [];
+            let factorial = 1;
+            for (let i = 1; i <= a; i++) {
+                array.push(i);
+            }
+            for (let i = 1; i < array.length; i++) {
+                factorial *= array[i];
+            }
+            console.log(array);
+            console.log(factorial);
+            console.log(typeof factorial);
+        }
+        factorial(5);
+
+
+        const palindromes = function (string) {
+            // https://www.w3schools.com/jsref/jsref_includes.asp
+
+            stringToArray = Array.from(string);
+
+            console.log(`New Array: ${stringToArray}`)
+            // https://www.w3schools.com/jsref/jsref_slice_array.asp
+            // https://www.briangonzalez.org/post/copying-array-javascript
+            stringToArrayDuplicate = stringToArray.slice();
+
+            flippedArray = stringToArrayDuplicate.reverse();
+            console.log(`Flipped Array: ${flippedArray}`)
+
+            // Needs Global Modifier to replace all occurrences using ReGeX
+            // https://www.w3schools.com/jsref/jsref_replace.asp
+
+            // Also Lowercase for sake of comparing both strings
+            //smashedOriginalString = originalString.replace(/ /g, "");
+            originalString = stringToArray.join('').toString().replace(/ |,|\.|\!|\?/g, "").toLowerCase();
+
+            flippedString = flippedArray.join('').toString().replace(/ |,|\.|\!|\?/g, "").toLowerCase();
+            //smashedFlippedString = flippedString.replace(" ", "");
+            if (flippedString === originalString) {
+                //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+                console.log(`${flippedString} matches ${originalString}. This is a palindrome.`);
+                return true;
+            } else {
+                console.log(`${flippedString} does not match ${originalString}. This is not a palindrome.`);
+                return false;
+            }
+
+        }
+        /*
+        palindromes("HELLO");
+        palindromes("A Car, a man, a maraca.");
+        palindromes("Animal loots foliated detail of stool lamina.");
+        palindromes("ZZZZ car, a man, a maraca.");
+        */
+        const fibonacci = function (fibonacciNumber) {
+            let fibonacciArray = [];
+
+            let i = 1;
+            let j = 1;
+
+
+            foo = 0;
+            // if user input is 2 or below
+            if (fibonacciNumber <= 2) {
+
+                if (fibonacciNumber == 0) {
+                    return "Give a value other than 0";
+                } else if (fibonacciNumber == 1) {
+                    fibonacciArray.push(i);
+                } else if (fibonacciNumber == 2) {
+                    fibonacciArray.push(i);
+                    fibonacciArray.push(j);
+                }
+
+                console.log(fibonacciArray);
+                lastNumberFibonacci = fibonacciArray.pop();
+                console.log(lastNumberFibonacci);
+                return lastNumberFibonacci;
+
+            } else {
+
+                fibonacciArray.push(i);
+                fibonacciArray.push(j);
+
+
+                while (foo < fibonacciNumber) {
+
+                    j = j + i;
+                    console.log("j is " + j);
+                    fibonacciArray.push(j);
+                    foo += 1;
+                    i = i + j;
+                    console.log("i is " + i);
+                    fibonacciArray.push(i);
+                    foo += 1;
+                }
+
+                fibonacciArray.length = fibonacciNumber;
+                correctedFibonacciArray = fibonacciArray;
+                console.log(correctedFibonacciArray);
+                // (1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144)
+                lastNumberFibonacci = correctedFibonacciArray.pop();
+                console.log(lastNumberFibonacci);
+                return lastNumberFibonacci;
+            }
+            // We inject two of the beginning values above, which is why we
+            // must remove 2 elements from the array; or else it will add an extra 2 elements.
+            // https://love2dev.com/blog/javascript-remove-from-array/
+
+        }
+
+        const pigLatiner = function (string) {
+            subStrings = string.split(" ");
+
+            originalArrayOfStrings = Array.from(subStrings);
+            arrayOfStrings = Array.from(subStrings);
+
+            pigLatinArray = [];
+
+            for (let i = 0; i < arrayOfStrings.length; i++) {
+                //convert each substring into individual elements(characters) in order to be manipulated
+                let currentString = arrayOfStrings[i];
+                firstCharCurrentString = currentString.substr(0, 1);
+                secondCharCurrentString = currentString.substr(1, 1);
+                thirdCharCurrentString = currentString.substr(2, 1);
+                removeFirstCharCurrentString = currentString.substr(1);
+                removeSecondCharCurrentString = currentString.substr(2);
+                removeThirdCharCurrentString = currentString.substr(3);
+                console.log(firstCharCurrentString);
+                if (/a|e|i|o|u/.test(firstCharCurrentString) == true) {
+
+
+
+                    console.log("Bingo. " + "firstCharacterOfCurrentString is " + firstCharCurrentString);
+                    currentString += "ay";
+                    console.log(currentString);
+                    pigLatinArray.push(currentString);
+                } else if (/q/.test(firstCharCurrentString) == true) {
+                    
+                    if (/u/.test(secondCharCurrentString) == true) {
+                        currentString = removeSecondCharCurrentString + firstCharCurrentString
+                            + secondCharCurrentString + "ay";
+                    }
+                
+                } else {
+                    if (/a|e|i|o|u/.test(secondCharCurrentString) == false) {
+
+
+
+                        if (/a|e|i|o|u/.test(thirdCharCurrentString) == false) {
+                        currentString = removeThirdCharCurrentString + firstCharCurrentString
+                            + secondCharCurrentString + thirdCharCurrentString + "ay";
+                        pigLatinArray.push(currentString);
+
+                        } else {
+
+                        currentString = removeSecondCharCurrentString + firstCharCurrentString
+                            + secondCharCurrentString + "ay";
+                        pigLatinArray.push(currentString);
+                        }
+
+                    } else {
+                    currentString = removeFirstCharCurrentString + firstCharCurrentString + "ay";
+                    console.log(currentString);
+                    pigLatinArray.push(currentString);
+                    }
+
+                }
+
+
+            }
+            return pigLatinArray.toString();
+        }
+
+        
+        /*
+
+
+        Rule 1: If a word begins with a vowel sound, add an "ay" sound to the end of the word.
+
+        Rule 2: If a word begins with a consonant sound,
+        move it to the end of the word, and then add an "ay" sound to the end of the word.
+
+        */
+    </script>
+</body>
+<script>
+</script>
+
+</html>
